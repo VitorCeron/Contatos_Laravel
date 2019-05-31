@@ -23,6 +23,7 @@ Vue.use(VueTheMask)
 
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 Vue.component('input-dinamico-telefone', require('./components/InputDinamicoTelefone.vue').default);
+Vue.component('topo', require('./components/Topo.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
