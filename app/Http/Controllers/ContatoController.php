@@ -11,19 +11,22 @@ use Illuminate\Support\Facades\Mail;
 
 class ContatoController extends Controller
 {
-    public function index(){
-        $contatos = Contato::where('user_id', '=', Auth::user()->id)->get();
-        //$telefone = Telefone::where('contato_id', '=', $contatos[0]->id)->limit(1)->get()[0];
+    public function index(Request $request){
+
+        //verifica se o formulario de filtro foi preenchido, se sim a view renderiza os dados de acordo com a pesquisa
+        if($request->name != null){
+            $contatos = Contato::where('user_id', '=', Auth::user()->id)->where('nome_contato','LIKE', '%'.trim($request->name).'%')->orderBy('nome_contato')->paginate(7);
+        } else {
+            $contatos = Contato::where('user_id', '=', Auth::user()->id)->paginate(7);
+        }
+
         return view('contato.index',compact('contatos'));
+
     }
 
     public function create(){
         $quantidadeContatos = Contato::orderBy('id', 'DESC')->limit(1)->get();
-        if(count($quantidadeContatos) == 0){
-            $quantidadeContatos = 0;
-        } else {
-            $quantidadeContatos = $quantidadeContatos[0]->id;
-        }
+        $quantidadeContatos = count($quantidadeContatos) == 0 ? 0 : $quantidadeContatos = $quantidadeContatos[0]->id;
         return view('contato.create', compact('quantidadeContatos'));
     }
 
@@ -51,7 +54,7 @@ class ContatoController extends Controller
                 ]);
             }
         }
-        
+
         Mail::to($request['email_contato'])->send(new EnviarEmail());
 
         return redirect()->action('ContatoController@index')->with('success', 'Contato cadastrado com sucesso!!');

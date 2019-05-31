@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div v-for="(line, index) in lines" v-bind:key="index" class="row">
+        <div v-for="(line, index) in lines" :key="index" class="row">
             <div class="col-md-12">
                 <div class="form-row align-items-center">
                     <input type="hidden" name="id_telefone[]" :value="line.id">

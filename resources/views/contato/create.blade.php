@@ -55,7 +55,7 @@
         <button type="submit" id="btnSalvarTipoTelefone" class="btn btn-success" ><i class="fas fa-save"></i> Salvar</button>
 
 
-        {{--<script src="{{ asset('js/contato/create.js') }} "></script>--}}
+        <script src="{{ asset('js/contato/create.js') }} "></script>
     </form>
 
 

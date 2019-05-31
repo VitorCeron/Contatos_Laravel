@@ -20,7 +20,11 @@
             </div>
 
             <div class="col-md-8 float-right mr-0">
-                <div class="form-group form-inline  float-right">
+                <div class="form-group form-inline float-right">
+                    <form>
+                        <input type="text" class="form-control" id="name" name="name" placeholder="Pesquise por nome" value="{{ isset($name) ? $name : '' }} " />
+                        <button type="submit" href="{{ route('contato.index') }}" class="btn btn-primary mr-2"><i class="fas fa-search"></i> Pesquisar</button>
+                    </form>
                     <a href="{{  route('contato.create')  }}" class="btn btn-success"><i class="fas fa-plus"></i> Novo </a>
                 </div>
 
@@ -33,7 +37,6 @@
             <th>Id</th>
             <th>Nome</th>
             <th>E-mail</th>
-            {{--<th>Melhor Telefone</th>--}}
             <th style="text-align: center"> Ações </th>
         </tr>
         @if (count($contatos) > 0)
@@ -42,7 +45,6 @@
                     <td>{{ $contato->id }}</td>
                     <td>{{ $contato->nome_contato }}</td>
                     <td>{{ $contato->email_contato }}</td>
-                    {{--<td>{{ $telefone->telefone }}</td>--}}
                     <td class="text-center">
                         <a class="btn btn-primary btn-sm" href="{{ route('contato.edit', $contato->id) }}" title="Editar Contato"><i class="fas fa-edit"></i></a>
                         <form action="{{ route('contato.destroy', $contato->id) }}" method="POST" style="display: inline-block;">
@@ -60,8 +62,8 @@
         @endif
     </table>
 
-    {{--<div class="d-flex justify-content-center">--}}
-    {{--{{ $coachees->appends(['name' => isset($name) ? $name : ''])->links() }}--}}
-    {{--</div>--}}
+    <div class="d-flex justify-content-center">
+    {{ $contatos->appends(['name' => isset($name) ? $name : ''])->links() }}
+    </div>
 
 @endsection
