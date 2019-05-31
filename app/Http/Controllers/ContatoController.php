@@ -27,10 +27,6 @@ class ContatoController extends Controller
         return view('contato.create', compact('quantidadeContatos'));
     }
 
-    public function show(){
-        //return view('tipoTelefone.index');
-    }
-
     public function store(Request $request){
 
         $request->validate([
@@ -46,8 +42,8 @@ class ContatoController extends Controller
             'user_id' => Auth::user()->id
         ]);
 
-        for ($i = 0; $i < $request['tipo_telefone']; $i++){
-            if( $request['tipo_telefone'][$i] != "" || $request['tipo_telefone'][$i] != null || $request['telefone'][$i] != "" || $request['telefone'][$i] != null ){
+        for ($i = 0; $i < count($request['tipo_telefone']); $i++){
+            if( $request['tipo_telefone'][$i] != "" && $request['tipo_telefone'][$i] != NULL && $request['telefone'][$i] != "" && $request['telefone'][$i] != NULL ){
                 Telefone::create([
                     'tipo_telefone' => $request['tipo_telefone'][$i],
                     'telefone' => $request['telefone'][$i],
@@ -55,7 +51,7 @@ class ContatoController extends Controller
                 ]);
             }
         }
-
+        
         Mail::to($request['email_contato'])->send(new EnviarEmail());
 
         return redirect()->action('ContatoController@index')->with('success', 'Contato cadastrado com sucesso!!');
